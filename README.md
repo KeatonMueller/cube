@@ -11,9 +11,15 @@ Alternatively, you can clone this repo and run `npm install` followed by `npm st
 The controls are currently a work in progress, and are subject to change. Currently lowercase key strokes indicate a clockwise turn, while uppercase key strokes cause a counter-clockwise turn.
 
 `r` rotates the Right face
+
 `l` rotates the Left face
+
 `u` rotates the Up face
+
 `d` rotates the Down face
+
 `f` rotates the Front face
+
 `b` rotates the Back face
+
 `m` rotates the Middle slice
