@@ -5,4 +5,4 @@ This project began in 2019 during my junior year of college, and is still ongoin
 
 To view it running, visit https://keatonmueller.github.io and view the Projects page.
 
-Alternatively, you can clone this repo and run `npm start`.
+Alternatively, you can clone this repo and run `npm install` followed by `npm start`.
