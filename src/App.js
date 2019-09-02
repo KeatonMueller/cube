@@ -241,6 +241,7 @@ class App extends React.Component {
 
         this.animate()
 
+        window.scrollTo(0, 0)
     }
     render(){
         return (
