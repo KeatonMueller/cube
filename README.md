@@ -15,28 +15,45 @@ You can learn more about traditional Rubik's Cube notation here: https://ruwix.c
 Below are the keystrokes and their corresponding rotations:
 
 `r` = R
+
 `R` = R'
 
+
 `l` = L
+
 `L` = L'
 
+
 `u` = U
+
 `U` = U'
 
+
 `d` = D
+
 `D` = D'
 
+
 `f` = F
+
 `F` = F'
 
+
 `b` = B
+
 `B` = B'
 
+
 `m` = M
+
 `M` = M'
 
+
 `e` = E
+
 `E` = E'
 
+
 `s` = S
+
 `S` = S'
