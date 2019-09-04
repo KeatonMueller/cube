@@ -8,18 +8,35 @@ To view it running, visit https://keatonmueller.github.io/#/cube.
 Alternatively, you can clone this repo and run `npm install` followed by `npm start`.
 
 # Controls
-The controls are currently a work in progress, and are subject to change. Currently lowercase key strokes indicate a clockwise turn, while uppercase key strokes cause a counter-clockwise turn.
+The controls currently support clockwise and counterclockwise face and slice rotations. A lowercase keystroke indicates a clockwise turn of the corresponding face or slice, and a capital keystroke indicates a counterclockwise rotation.
 
-`r` rotates the Right face
+You can learn more about traditional Rubik's Cube notation here: https://ruwix.com/the-rubiks-cube/notation/
 
-`l` rotates the Left face
+Below are the keystrokes and their corresponding rotations:
 
-`u` rotates the Up face
+`r` = R
+`R` = R'
 
-`d` rotates the Down face
+`l` = L
+`L` = L'
 
-`f` rotates the Front face
+`u` = U
+`U` = U'
 
-`b` rotates the Back face
+`d` = D
+`D` = D'
 
-`m` rotates the Middle slice
+`f` = F
+`F` = F'
+
+`b` = B
+`B` = B'
+
+`m` = M
+`M` = M'
+
+`e` = E
+`E` = E'
+
+`s` = S
+`S` = S'
