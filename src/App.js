@@ -29,11 +29,18 @@ class App extends React.Component {
         this.onDocumentMouseDown = this.onDocumentMouseDown.bind(this)
         this.onDocumentMouseUp = this.onDocumentMouseUp.bind(this)
         this.onDocumentMouseMove = this.onDocumentMouseMove.bind(this)
+        this.onTouchStart = this.onTouchStart.bind(this)
+        this.onTouchEnd = this.onTouchEnd.bind(this)
+        this.onTouchMove = this.onTouchMove.bind(this)
     }
     componentDidMount(){
+        document.addEventListener('touchstart', this.onTouchStart, false)
+        document.addEventListener('touchend', this.onTouchEnd, false)
+        document.addEventListener('touchmove', this.onTouchMove, false)
         document.addEventListener('mousedown', this.onDocumentMouseDown, false)
         document.addEventListener('mouseup', this.onDocumentMouseUp, false)
         document.addEventListener('mousemove', this.onDocumentMouseMove, false)
+
         document.addEventListener('keypress', this.onKeyPress, false)
         window.addEventListener('resize', this.onWindowResize, false)
 
@@ -289,6 +296,19 @@ class App extends React.Component {
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    onTouchStart(event){
+        event.offsetX = event.touches[0].clientX
+        event.offsetY = event.touches[0].clientY - 56
+        this.onDocumentMouseDown(event)
+    }
+    onTouchEnd(event){
+        this.onDocumentMouseUp(event)
+    }
+    onTouchMove(event){
+        event.offsetX = event.touches[0].clientX
+        event.offsetY = event.touches[0].clientY - 56
+        this.onDocumentMouseMove(event)
     }
     onDocumentMouseDown(event){
         this.mouse.x = (event.offsetX / window.innerWidth) * 2 - 1
