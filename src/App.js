@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid'
 import Cubie from './Cubie'
 
 const ANIMATION_SPEED = 0.2
+const HEADER_SIZE = 36
 const axes = new Map([
     ['x', new THREE.Vector3(1, 0, 0)],
     ['y', new THREE.Vector3(0, 1, 0)],
@@ -299,7 +300,7 @@ class App extends React.Component {
     }
     onTouchStart(event){
         event.offsetX = event.touches[0].clientX
-        event.offsetY = event.touches[0].clientY - 56
+        event.offsetY = event.touches[0].clientY - HEADER_SIZE
         this.onDocumentMouseDown(event)
     }
     onTouchEnd(event){
@@ -307,7 +308,7 @@ class App extends React.Component {
     }
     onTouchMove(event){
         event.offsetX = event.touches[0].clientX
-        event.offsetY = event.touches[0].clientY - 56
+        event.offsetY = event.touches[0].clientY - HEADER_SIZE
         this.onDocumentMouseMove(event)
     }
     onDocumentMouseDown(event){
