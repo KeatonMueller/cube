@@ -1,7 +1,5 @@
 import * as THREE from 'three'
 import getRotationMatrix from './RotationMatrices'
-import Config from './Config'
-const CUBIE_SIZE = Config.CUBIE_SIZE
 
 var worldAxisEnum = Object.freeze({
 	'x': new THREE.Vector3(1, 0, 0),
@@ -12,8 +10,8 @@ var worldAxisEnum = Object.freeze({
 //Rounded Rectangle code taken from three.js examples: https://threejs.org/examples/#webgl_geometry_shapes
 var shape = new THREE.Shape()
 var pos = 0
-var size = .925*CUBIE_SIZE
-var radius = .1*CUBIE_SIZE
+var size = .925
+var radius = .1
 shape.moveTo(pos, pos + radius)
 shape.lineTo(pos, pos + size - radius)
 shape.quadraticCurveTo(pos, pos + size, pos + radius, pos + size)
@@ -38,8 +36,8 @@ class Face {
 		this.geometry = geometry
 		this.mesh = new THREE.Mesh(this.geometry, this.material)
 		this.updatePosition(this.fixedPositionVector, this.fixedFacingVector)
-		this.mesh.rotation.y = Math.PI * 0.5 * Math.abs(this.facingVector.x / CUBIE_SIZE)
-		this.mesh.rotation.x = Math.PI * 0.5 * Math.abs(this.facingVector.y / CUBIE_SIZE)
+		this.mesh.rotation.y = Math.PI * 0.5 * Math.abs(this.facingVector.x)
+		this.mesh.rotation.x = Math.PI * 0.5 * Math.abs(this.facingVector.y)
 	}
 
 	updatePosition(positionVector, facingVector){
@@ -47,19 +45,19 @@ class Face {
 		this.mesh.position.x = positionVector.x + (0.5 * facingVector.x)
 		this.mesh.position.y = positionVector.y + (0.5 * facingVector.y)
 		this.mesh.position.z = positionVector.z + (0.5 * facingVector.z)
-		this.mesh.position.x += this.mesh.position.x > 0 ? 0.001*CUBIE_SIZE : -0.001*CUBIE_SIZE
-		this.mesh.position.y += this.mesh.position.y > 0 ? 0.001*CUBIE_SIZE : -0.001*CUBIE_SIZE
-		this.mesh.position.z += this.mesh.position.z > 0 ? 0.001*CUBIE_SIZE : -0.001*CUBIE_SIZE
+		this.mesh.position.x += this.mesh.position.x > 0 ? 0.001 : -0.001
+		this.mesh.position.y += this.mesh.position.y > 0 ? 0.001 : -0.001
+		this.mesh.position.z += this.mesh.position.z > 0 ? 0.001 : -0.001
 
 		var axes = ['x', 'y', 'z']
 		axes.forEach((axis) => {
 			if(positionVector[axis] === facingVector[axis] && Math.abs(positionVector[axis]) === 1){
 				for(var rest of ['x', 'y', 'z'].filter((elt) => elt !== axis)){
 					if(positionVector[rest] === 1){
-						this.mesh.position[rest] -= .025*CUBIE_SIZE
+						this.mesh.position[rest] -= .025
 					}
 					else if(positionVector[rest] === -1){
-						this.mesh.position[rest] += .025*CUBIE_SIZE
+						this.mesh.position[rest] += .025
 					}
 				}
 			}
@@ -80,8 +78,8 @@ class Face {
 			Math.round(this.fixedFacingVector.z)
 		)
 		this.fixedFacingVector = new THREE.Vector3(this.facingVector.x, this.facingVector.y, this.facingVector.z)
-		this.mesh.rotation.y = Math.PI * 0.5 * Math.abs(this.facingVector.x / CUBIE_SIZE)
-		this.mesh.rotation.x = Math.PI * 0.5 * Math.abs(this.facingVector.y / CUBIE_SIZE)
+		this.mesh.rotation.y = Math.PI * 0.5 * Math.abs(this.facingVector.x)
+		this.mesh.rotation.x = Math.PI * 0.5 * Math.abs(this.facingVector.y)
 		this.mesh.rotation.z = 0
 	}
 	//performs instantaneous 90 degree turn

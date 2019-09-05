@@ -1,8 +1,6 @@
 import * as THREE from 'three'
 import getRotationMatrix from './RotationMatrices'
 import Face from './Face'
-import Config from './Config'
-const CUBIE_SIZE = Config.CUBIE_SIZE
 
 //Rounded Box code taken from forum: https://discourse.threejs.org/t/round-edged-box/1402
 function createBoxWithRoundedEdges(width, height, depth, radius0, smoothness) {
@@ -14,7 +12,7 @@ function createBoxWithRoundedEdges(width, height, depth, radius0, smoothness) {
 	shape.absarc( width - radius * 2, height -  radius * 2, eps, Math.PI / 2, 0, true )
 	shape.absarc( width - radius * 2, eps, eps, 0, -Math.PI / 2, true )
 	let geometry = new THREE.ExtrudeBufferGeometry( shape, {
-		amount: depth - radius0 * 2,
+		depth: depth - radius0 * 2,
 		bevelEnabled: true,
 		bevelSegments: smoothness * 2,
 		steps: 1,
@@ -26,8 +24,8 @@ function createBoxWithRoundedEdges(width, height, depth, radius0, smoothness) {
 	return geometry
 }
 
-// var geometry = new THREE.BoxGeometry(CUBIE_SIZE, CUBIE_SIZE, CUBIE_SIZE)
-var geometry = createBoxWithRoundedEdges(CUBIE_SIZE, CUBIE_SIZE, CUBIE_SIZE, .05*CUBIE_SIZE, 16)
+// var geometry = new THREE.BoxGeometry(1, 1, 1)
+var geometry = createBoxWithRoundedEdges(1, 1, 1, .05, 16)
 var materialBlack = new THREE.MeshBasicMaterial({ color: 0x000000 })
 
 class Cubie {
@@ -41,23 +39,23 @@ class Cubie {
 		this.fixedPositionVector = new THREE.Vector3(x, y, z)
 		this.mesh = new THREE.Mesh(geometry, materialBlack)
 		this.faces = []
-		if(x === -CUBIE_SIZE){
-			this.faces.push(new Face(x, y, z, new THREE.Vector3(-CUBIE_SIZE, 0, 0), 0x00ff00))
+		if(x === -1){
+			this.faces.push(new Face(x, y, z, new THREE.Vector3(-1, 0, 0), 0x00ff00))
 		}
-		else if(x === CUBIE_SIZE){
-			this.faces.push(new Face(x, y, z, new THREE.Vector3(CUBIE_SIZE, 0, 0), 0x0000ff))
+		else if(x === 1){
+			this.faces.push(new Face(x, y, z, new THREE.Vector3(1, 0, 0), 0x0000ff))
 		}
-		if(y === -CUBIE_SIZE){
-			this.faces.push(new Face(x, y, z, new THREE.Vector3(0, -CUBIE_SIZE, 0), 0xffff00))
+		if(y === -1){
+			this.faces.push(new Face(x, y, z, new THREE.Vector3(0, -1, 0), 0xffff00))
 		}
-		else if(y === CUBIE_SIZE){
-			this.faces.push(new Face(x, y, z, new THREE.Vector3(0, CUBIE_SIZE, 0), 0xffffff))
+		else if(y === 1){
+			this.faces.push(new Face(x, y, z, new THREE.Vector3(0, 1, 0), 0xffffff))
 		}
-		if(z === -CUBIE_SIZE){
-			this.faces.push(new Face(x, y, z, new THREE.Vector3(0, 0, -CUBIE_SIZE), 0xff9900))
+		if(z === -1){
+			this.faces.push(new Face(x, y, z, new THREE.Vector3(0, 0, -1), 0xff9900))
 		}
-		else if(z === CUBIE_SIZE){
-			this.faces.push(new Face(x, y, z, new THREE.Vector3(0, 0, CUBIE_SIZE), 0xff0000))
+		else if(z === 1){
+			this.faces.push(new Face(x, y, z, new THREE.Vector3(0, 0, 1), 0xff0000))
 		}
 
         // var geo = new THREE.EdgesGeometry( this.mesh.geometry )
