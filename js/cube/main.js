@@ -72,10 +72,10 @@ const noop = () => {};
 
 // solve the cube
 const solveCube = () => {
-    // get the scramble from the cube
-    let scramble = cube.getMoves();
+    // get the cube state
+    const state = cube.repr();
     // get the solution from the web assembly module
-    let solution = Module.getSolution(scramble);
+    let solution = Module.getSolution(state);
 
     // process each solution move
     solution.split(" ").forEach((move) => {
@@ -284,7 +284,6 @@ const update = () => {
         let move = moveBuffer.shift();
         if (move === noop) {
             // move === noop is a special flag signaling the end of the solution
-            cube.clearMoves();
             solving = false;
             animating = false;
         } else if (move === solveCube) {

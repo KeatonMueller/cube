@@ -48,6 +48,15 @@ class Face {
         this.mesh.rotation.x = Math.PI * 0.5 * Math.abs(this.facingVector.y);
     }
 
+    getColor() {
+        if (this.color === 0x00ff00) return "G";
+        if (this.color === 0x0000ff) return "B";
+        if (this.color === 0xffff00) return "Y";
+        if (this.color === 0xffffff) return "W";
+        if (this.color === 0xff9900) return "O";
+        if (this.color === 0xff0000) return "R";
+    }
+
     updatePosition(positionVector, facingVector) {
         // mesh.position is the actual position of the face, defined as the positionVector translated by the facingVector
         this.mesh.position.x = positionVector.x + 0.5 * facingVector.x;
