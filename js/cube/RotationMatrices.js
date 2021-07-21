@@ -1,7 +1,21 @@
 import * as THREE from "https://unpkg.com/three@0.124.0/build/three.module.js";
 
+import { Axes } from "./Constants.js";
+
+/**
+ * Rotation matrices to rotate the THREE.Vector3 about an axis by
+ * a given angle.
+ *
+ * See: https://en.wikipedia.org/wiki/Rotation_matrix#In_three_dimensions
+ * for more info on rotation matrices.
+ */
+
+/**
+ * Get a rotation matrix to rotate on the X-axis
+ * by theta radians.
+ */
 function getXRotationMatrix(theta) {
-    var m = new THREE.Matrix3();
+    const m = new THREE.Matrix3();
     m.set(
         1,
         0,
@@ -16,8 +30,12 @@ function getXRotationMatrix(theta) {
     return m;
 }
 
+/**
+ * Get a rotation matrix to rotate on the Y-axis
+ * by theta radians.
+ */
 function getYRotationMatrix(theta) {
-    var m = new THREE.Matrix3();
+    const m = new THREE.Matrix3();
     m.set(
         Math.cos(theta),
         0,
@@ -32,8 +50,12 @@ function getYRotationMatrix(theta) {
     return m;
 }
 
+/**
+ * Get a rotation matrix to rotate on the Z-axis
+ * by theta radians.
+ */
 function getZRotationMatrix(theta) {
-    var m = new THREE.Matrix3();
+    const m = new THREE.Matrix3();
     m.set(
         Math.cos(theta),
         -Math.sin(theta),
@@ -48,13 +70,28 @@ function getZRotationMatrix(theta) {
     return m;
 }
 
-var rotationMatrices = [
+/**
+ * Array of rotation matrices, one per axis.
+ */
+const rotationMatrices = [
     getXRotationMatrix,
     getYRotationMatrix,
     getZRotationMatrix,
 ];
-var axisEnum = Object.freeze({ x: 0, y: 1, z: 2 });
 
+/**
+ * Map from axis to index into rotationMatrices array.
+ */
+const axisEnum = Object.freeze({
+    [Axes.POSITIVE.X]: 0,
+    [Axes.POSITIVE.Y]: 1,
+    [Axes.POSITIVE.Z]: 2,
+});
+
+/**
+ * Get a rotation matrix for the given axis ("x", "y", or "z")
+ * for the given number of radians.
+ */
 export default function getRotationMatrix(axis, theta) {
     return rotationMatrices[axisEnum[axis]](theta);
 }
