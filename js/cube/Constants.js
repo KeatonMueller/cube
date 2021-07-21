@@ -38,6 +38,14 @@ export const AxisVectors = Object.freeze({
 export const ANIMATION_SPEED = 12.5;
 
 /**
+ * Constants in the move buffer to signal the start and end of a solution
+ */
+export const MoveFlags = Object.freeze({
+    SOLUTION_START: "start",
+    SOLUTION_END: "end",
+});
+
+/**
  * Map from key presses to the moves they correspond to.
  */
 export const KeysToMoves = Object.freeze({

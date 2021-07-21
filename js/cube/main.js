@@ -6,6 +6,7 @@ import {
     Axes,
     AxisVectors,
     KeysToMoves,
+    MoveFlags,
     ANIMATION_SPEED,
 } from "./Constants.js";
 
@@ -51,6 +52,8 @@ let solving = false;
 
 // find the dom element designated for the threejs content
 const domElement = document.getElementById("three");
+// find the solve button
+const solveButton = document.getElementById("solve-button");
 
 // create a scene
 const scene = new THREE.Scene();
@@ -92,7 +95,7 @@ const cube = new Cube(scene);
 /**
  * Solve the cube.
  *
- * Adds moves needed to solve the cube to the moveBuffer, followed by "END".
+ * Adds moves needed to solve the cube to the moveBuffer, followed by SOLUTION_END.
  *
  * Uses the web assembly module compiled from the C++ solver code.
  */
@@ -101,6 +104,12 @@ const solveCube = () => {
     const state = cube.repr();
     // get the solution from the web assembly module
     const solution = Module.getSolution(state).trim();
+
+    // do nothing if cube is already solved
+    if (solution.length === 0) {
+        solving = false;
+        return;
+    }
 
     // process each solution move
     solution.split(" ").forEach((move) => {
@@ -114,7 +123,7 @@ const solveCube = () => {
         }
     });
     // push flag signaling end of the solution
-    moveBuffer.push("END");
+    moveBuffer.push(MoveFlags.SOLUTION_END);
 };
 
 // clock for keeping track of time
@@ -133,12 +142,10 @@ const update = () => {
         // get the move off the queue
         const move = moveBuffer.shift();
 
-        if (move === "END") {
-            // move === "END" is a special flag signaling the end of the solution
+        if (move === MoveFlags.SOLUTION_END) {
             solving = false;
             animating = false;
-        } else if (move === "SOLVE") {
-            // move === "SOLVE" is a special flag to signal the start of a solution
+        } else if (move === MoveFlags.SOLUTION_START) {
             solveCube();
         } else {
             // normal move. execute it and set animating to true
@@ -192,13 +199,22 @@ const onKeyPress = (event) => {
         // push normal move if key is in KeysToMoves map
         moveBuffer.push(KeysToMoves[event.key]);
     } else if (event.key === "Enter") {
-        // set solving to true if Enter is hit
+        // set solving to true and queue a solve request
         solving = true;
-        // queue up a request to solve the cube
-        moveBuffer.push("SOLVE");
+        moveBuffer.push(MoveFlags.SOLUTION_START);
     }
 };
 document.addEventListener("keypress", onKeyPress, false);
+
+// have solve button queue a solve
+solveButton.onclick = () => {
+    // do nothing if solving
+    if (solving) return;
+
+    // set solving to true and queue a solve request
+    solving = true;
+    moveBuffer.push(MoveFlags.SOLUTION_START);
+};
 
 /**
  * Resize canvas on window resize
