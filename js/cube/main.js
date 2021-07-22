@@ -71,7 +71,7 @@ camera.position.y = 4;
 camera.position.z = 6;
 
 // create a renderer and add it to the dom
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, getHeight());
 domElement.appendChild(renderer.domElement);
