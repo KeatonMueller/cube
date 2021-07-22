@@ -94,6 +94,34 @@ controls.update();
 // create a new cube
 const cube = new Cube(scene);
 
+// variable to store cutoff pixel location for changing cube rotations
+let rotationPixelCutoff;
+
+/**
+ * Locate the front, bottom, right cubie and set its x
+ * coordinate to be the new rotationPixelCutoff value.
+ */
+const updateRotationPixelCutoff = () => {
+    const halfWidth = window.innerWidth / 2;
+
+    // find the cubie in the front, bottom, right position
+    cube.cubies.forEach((cubie) => {
+        if (
+            cubie.fixedPositionVector.x === 1 &&
+            cubie.fixedPositionVector.y === -1 &&
+            cubie.fixedPositionVector.z === 1
+        ) {
+            // pick its x position
+            const pos = cubie.fixedPositionVector.clone();
+            pos.project(camera);
+            rotationPixelCutoff = pos.x * halfWidth + halfWidth;
+        }
+    });
+};
+updateRotationPixelCutoff();
+// update position when zooming
+controls.addEventListener("change", updateRotationPixelCutoff);
+
 /**
  * Solve the cube.
  *
@@ -242,6 +270,7 @@ const onWindowResize = () => {
     camera.aspect = window.innerWidth / getHeight();
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, getHeight());
+    updateRotationPixelCutoff();
 };
 window.addEventListener("resize", onWindowResize, false);
 
@@ -358,8 +387,15 @@ const onDocumentMouseMove = (event) => {
             if (chosenDir === -1) moveBuffer.push("y");
             else if (chosenDir === 1) moveBuffer.push("y'");
         } else if (chosenAxis === Axes.POSITIVE.Y) {
-            if (chosenDir === -1) moveBuffer.push("x'");
-            else if (chosenDir === 1) moveBuffer.push("x");
+            if (event.offsetX < rotationPixelCutoff) {
+                // do an x rotation if to the left of the pixel cutoff
+                if (chosenDir === -1) moveBuffer.push("x'");
+                else if (chosenDir === 1) moveBuffer.push("x");
+            } else {
+                // do a z rotation if to the right
+                if (chosenDir === -1) moveBuffer.push("z");
+                else if (chosenDir === 1) moveBuffer.push("z'");
+            }
         }
         return;
     }
