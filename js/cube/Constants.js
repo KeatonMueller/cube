@@ -46,6 +46,15 @@ export const MoveFlags = Object.freeze({
 });
 
 /**
+ * Constants for click events to control what happens during mouse actions
+ */
+export const ClickFlags = Object.freeze({
+    NONE: "none",
+    ROTATION: "rotation",
+    CUBIE: "cubie",
+});
+
+/**
  * Map from key presses to the moves they correspond to.
  */
 export const KeysToMoves = Object.freeze({
