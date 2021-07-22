@@ -298,9 +298,6 @@ document.addEventListener("pointerup", onDocumentMouseUp, false);
 /**
  * Handle mouse move events by determining what
  * move is being requested, and pushing it to the moveBuffer.
- *
- * Haven't figured out a good way to do this, so this method is
- * kind of terrifying, but functional at least.
  */
 const onDocumentMouseMove = (event) => {
 	// do nothing if not dragging, or if solving
