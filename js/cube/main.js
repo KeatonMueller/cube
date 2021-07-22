@@ -190,6 +190,9 @@ animate();
 
 window.scrollTo(0, 0);
 
+// variable to track if 'w' or 'W' is being held
+let holdingW = false;
+
 /**
  * Handle key press event
  */
@@ -197,16 +200,30 @@ const onKeyPress = (event) => {
     // do nothing if solving
     if (solving) return;
 
-    if (KeysToMoves[event.key] !== undefined) {
+    // append 'w' if holding w
+    const key = holdingW ? "w" + event.key : event.key;
+
+    if (KeysToMoves[key] !== undefined) {
         // push normal move if key is in KeysToMoves map
-        moveBuffer.push(KeysToMoves[event.key]);
+        moveBuffer.push(KeysToMoves[key]);
     } else if (event.key === "Enter") {
         // set solving to true and queue a solve request
         solving = true;
         moveBuffer.push(MoveFlags.SOLUTION_START);
+    } else if (event.key === "w" || event.key === "W") {
+        holdingW = true;
     }
 };
 document.addEventListener("keypress", onKeyPress, false);
+
+/**
+ * Handle key up event
+ */
+const onKeyUp = (event) => {
+    // unset holdingW if released w
+    if (event.key === "w" || event.key === "W") holdingW = false;
+};
+document.addEventListener("keyup", onKeyUp, false);
 
 // have solve button queue a solve
 solveButton.onclick = () => {
